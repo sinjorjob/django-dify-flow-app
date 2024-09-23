@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>インシデント分析アプリ</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.0.2/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: #f0f7ff;
+        }
+        .form-select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.5rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            padding-right: 2.5rem;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+        .custom-shadow {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .glossy {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.18);
+        }
+        #resultContent {
+            font-family: 'Noto Sans JP', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        #resultContent h1, #resultContent h2, #resultContent h3, #resultContent h4, #resultContent h5, #resultContent h6 {
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        #resultContent h1 { 
+            font-size: 2.2em;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.3em;
+        }
+        #resultContent h2 { 
+            font-size: 1.8em;
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            padding: 0.7em;
+            border-left: 5px solid #60a5fa;
+            margin-top: 2em;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        #resultContent h2::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+            pointer-events: none;
+        }
+        #resultContent h3 { 
+            font-size: 1.5em;
+            border-bottom: 1px dashed #3498db;
+            padding-bottom: 0.3em;
+        }
+        #resultContent p, #resultContent ul, #resultContent ol {
+            margin-bottom: 1em;
+        }
+        #resultContent ul, #resultContent ol {
+            padding-left: 1.5em;
+        }
+        #resultContent li {
+            margin-bottom: 0.5em;
+        }
+        #resultContent code {
+            background-color: #f0f0f0;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+        #resultContent pre {
+            background-color: #282c34;
+            padding: 1em;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-bottom: 1em;
+        }
+        #resultContent pre code {
+            background-color: transparent;
+            padding: 0;
+            border-radius: 0;
+            color: #abb2bf;
+        }
+        #resultContent blockquote {
+            border-left: 4px solid #3498db;
+            padding-left: 1em;
+            color: #34495e;
+            font-style: italic;
+            margin-bottom: 1em;
+            background-color: #f8f9fa;
+            padding: 1em;
+        }
+        #resultContent table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 1em;
+        }
+        #resultContent th, #resultContent td {
+            border: 1px solid #ddd;
+            padding: 0.8em;
+            text-align: left;
+        }
+        #resultContent th {
+            background-color: #e3f2fd;
+            font-weight: 600;
+        }
+        #resultContent tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        .form-section {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .result-section {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+        .shadow-text {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
+    <div class="container mx-auto px-4 py-12">
+        <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-2xl overflow-hidden glossy">
+            <div class="bg-gradient-to-r from-blue-800 via-blue-600 to-indigo-800 p-8 relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-white opacity-10"></div>
+                <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=%2220%22 height=%2220%22 viewBox=%220 0 20 20%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22%239C92AC%22 fill-opacity=%220.05%22 fill-rule=%22evenodd%22%3E%3Ccircle cx=%223%22 cy=%223%22 r=%223%22/%3E%3Ccircle cx=%2213%22 cy=%2213%22 r=%223%22/%3E%3C/g%3E%3C/svg%3E');"></div>                <h1 class="text-4xl font-bold text-white text-center relative z-10 shadow-text">インシデント分析アプリ</h1>
+            </div>
+            <div class="p-8">
+                <div class="mb-10 flex justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300">
+                        <defs>
+                            <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#4299E1;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#667EEA;stop-opacity:1" />
+                            </linearGradient>
+                            <filter id="glow">
+                                <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                        </defs>
+                        
+                        <rect width="1200" height="300" fill="url(#grad1)" />
+                        
+                        <text x="600" y="60" font-family="Noto Sans JP, sans-serif" font-size="40" font-weight="bold" fill="white" text-anchor="middle" filter="url(#glow)">インシデント分析ワークフロー</text>
+
+                        <rect x="160" y="120" width="240" height="130" rx="15" fill="#FF6B6B" stroke="#FF6B6B" stroke-width="3"/>
+                        <rect x="480" y="120" width="240" height="130" rx="15" fill="#4ECDC4" stroke="#4ECDC4" stroke-width="3"/>
+                        <rect x="800" y="120" width="240" height="130" rx="15" fill="#FFA500" stroke="#FFA500" stroke-width="3"/>
+                        
+                        <path d="M400 185 H480 M720 185 H800" stroke="white" stroke-width="5" stroke-dasharray="10,5"/>
+                        
+                        <path d="M470 185 l-20 -10 v20 z" fill="white"/>
+                        <path d="M790 185 l-20 -10 v20 z" fill="white"/>
+                        
+                        <text x="280" y="165" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle" filter="url(#glow)">DETECTION</text>
+                        <text x="280" y="195" font-family="Noto Sans JP, sans-serif" font-size="20" fill="white" text-anchor="middle" filter="url(#glow)">検知・分類</text>
+                        <text x="280" y="225" font-family="Arial, sans-serif" font-size="16" fill="white" text-anchor="middle">Identify &amp; Classify</text>
+                        
+                        <text x="600" y="165" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle" filter="url(#glow)">ANALYSIS</text>
+                        <text x="600" y="195" font-family="Noto Sans JP, sans-serif" font-size="20" fill="white" text-anchor="middle" filter="url(#glow)">原因分析</text>
+                        <text x="600" y="225" font-family="Arial, sans-serif" font-size="16" fill="white" text-anchor="middle">Root Cause Investigation</text>
+                        
+                        <text x="920" y="165" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle" filter="url(#glow)">RESOLUTION</text>
+                        <text x="920" y="195" font-family="Noto Sans JP, sans-serif" font-size="20" fill="white" text-anchor="middle" filter="url(#glow)">解決・対策</text>
+                        <text x="920" y="225" font-family="Arial, sans-serif" font-size="16" fill="white" text-anchor="middle">Action Plan &amp; Mitigation</text>
+                        
+                        <rect x="450" y="260" width="300" height="30" rx="15" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="2"/>
+                        <text x="600" y="282" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white" text-anchor="middle" filter="url(#glow)">START ANALYSIS / 分析開始</text>
+                    </svg>
+                </div>
+                <div class="form-section">
+                    <form id="workflowForm" class="space-y-6">
+                        <div>
+                            <label for="category" class="block text-sm font-medium text-gray-700 mb-1">大項目</label>
+                            <select id="category" name="category" required class="form-select mt-1 block w-full pl-3 pr-10 py-3 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-lg custom-shadow">
+                                <option value="">選択してください</option>
+                                {% for category in categories %}
+                                    <option value="{{ category.id }}">{{ category.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div>
+                            <label for="subcategory" class="block text-sm font-medium text-gray-700 mb-1">中項目</label>
+                            <select id="subcategory" name="subcategory" required class="form-select mt-1 block w-full pl-3 pr-10 py-3 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-lg custom-shadow">
+                                <option value="">大項目を選択してください</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="details" class="block text-sm font-medium text-gray-700 mb-1">詳細情報</label>
+                            <textarea id="details" name="details" rows="4" required class="mt-1 block w-full sm:text-sm border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 custom-shadow"></textarea>
+                        </div>
+                        <div>
+                            <label for="query" class="block text-sm font-medium text-gray-700 mb-1">質問内容</label>
+                            <textarea id="query" name="query" rows="4" required class="mt-1 block w-full sm:text-sm border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 custom-shadow"></textarea>
+                        </div>
+                        <div>
+                            <button id="submitButton" type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out transform hover:-translate-y-1 hover:scale-105">
+                                検索する
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div id="loading" class="mt-8 text-center hidden">
+                    <svg class="animate-spin h-12 w-12 text-blue-600 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <p class="mt-2 text-sm text-gray-600">処理中...</p>
+                </div>
+                <div id="result" class="mt-8 result-section hidden">
+                    <h3 class="text-2xl font-semibold text-gray-900 mb-4 border-b-2 border-blue-500 pb-2">分析結果</h3>
+                    <div id="resultContent" class="prose prose-sm max-w-none"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const categorySelect = document.getElementById('category');
+            const subcategorySelect = document.getElementById('subcategory');
+            const form = document.getElementById('workflowForm');
+            const loading = document.getElementById('loading');
+            const result = document.getElementById('result');
+            const resultContent = document.getElementById('resultContent');
+            const submitButton = document.getElementById('submitButton');
+        
+            // マークダウンのレンダリング設定
+            marked.setOptions({
+                highlight: function(code, lang) {
+                    const language = hljs.getLanguage(lang) ? lang : 'plaintext';
+                    return hljs.highlight(code, { language }).value;
+                },
+                langPrefix: 'hljs language-',
+                breaks: true,
+                gfm: true
+            });
+        
+            categorySelect.addEventListener('change', function() {
+                const categoryId = this.value;
+                subcategorySelect.innerHTML = '<option value="">選択してください</option>';
+                subcategorySelect.disabled = true;
+        
+                if (categoryId) {
+                    fetch(`/get_subcategories/?category_id=${categoryId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            data.forEach(subcategory => {
+                                const option = document.createElement('option');
+                                option.value = subcategory.id;
+                                option.textContent = subcategory.name;
+                                subcategorySelect.appendChild(option);
+                            });
+                            subcategorySelect.disabled = false;
+                        })
+                        .catch(error => {
+                            console.error('サブカテゴリの取得中にエラーが発生しました:', error);
+                            subcategorySelect.innerHTML = '<option value="">エラーが発生しました</option>';
+                        });
+                }
+            });
+        
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                loading.classList.remove('hidden');
+                result.classList.add('hidden');
+                resultContent.innerHTML = '';
+        
+                // ボタンを無効化
+                submitButton.disabled = true;
+                submitButton.classList.add('opacity-50', 'cursor-not-allowed');
+        
+                const formData = new FormData(form);
+                const data = Object.fromEntries(formData.entries());
+        
+                // カテゴリとサブカテゴリの名前を取得
+                data.category = categorySelect.options[categorySelect.selectedIndex].text;
+                data.subcategory = subcategorySelect.options[subcategorySelect.selectedIndex].text;
+        
+                fetch('/run_dify_workflow/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('サーバーエラーが発生しました');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    loading.classList.add('hidden');
+                    result.classList.remove('hidden');
+                    if (data.status === 'success') {
+                        // marked.parse() を使用してマークダウンをHTMLに変換
+                        resultContent.innerHTML = marked.parse(data.result);
+                        hljs.highlightAll();
+                        
+                        // 見出し2（##）に特別なスタイルを適用
+                        const h2Elements = resultContent.querySelectorAll('h2');
+                        h2Elements.forEach(h2 => {
+                            h2.classList.add('bg-blue-100', 'p-3', 'rounded-lg', 'mb-4', 'text-blue-800', 'border-l-4', 'border-blue-500');
+                        });
+                    } else {
+                        throw new Error(data.message || 'Unknown error occurred');
+                    }
+                })
+                .catch(error => {
+                    loading.classList.add('hidden');
+                    result.classList.remove('hidden');
+                    resultContent.textContent = `エラー: ${error.message}`;
+                    console.error('ワークフロー実行中にエラーが発生しました:', error);
+                })
+                .finally(() => {
+                    // ボタンを再度有効化
+                    submitButton.disabled = false;
+                    submitButton.classList.remove('opacity-50', 'cursor-not-allowed');
+                });
+            });
+        
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+        });
+    </script>
+</body>
+</html>

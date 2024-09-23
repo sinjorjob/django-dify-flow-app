@@ -1,0 +1,794 @@
+[
+    {
+      "model": "dify_app.category",
+      "pk": 1,
+      "fields": {
+        "name": "インフラストラクチャ関連"
+      }
+    },
+    {
+      "model": "dify_app.category",
+      "pk": 2,
+      "fields": {
+        "name": "アプリケーション関連"
+      }
+    },
+    {
+      "model": "dify_app.category",
+      "pk": 3,
+      "fields": {
+        "name": "データベース関連"
+      }
+    },
+    {
+      "model": "dify_app.category",
+      "pk": 4,
+      "fields": {
+        "name": "セキュリティ関連"
+      }
+    },
+    {
+      "model": "dify_app.category",
+      "pk": 5,
+      "fields": {
+        "name": "ネットワーク関連"
+      }
+    },
+    {
+      "model": "dify_app.category",
+      "pk": 6,
+      "fields": {
+        "name": "エンドユーザー関連"
+      }
+    },
+    {
+      "model": "dify_app.category",
+      "pk": 7,
+      "fields": {
+        "name": "監視/アラート関連"
+      }
+    },
+    {
+      "model": "dify_app.category",
+      "pk": 8,
+      "fields": {
+        "name": "バックアップ/リカバリ関連"
+      }
+    },
+    {
+      "model": "dify_app.category",
+      "pk": 9,
+      "fields": {
+        "name": "コンプライアンス/規制関連"
+      }
+    },
+    {
+      "model": "dify_app.category",
+      "pk": 10,
+      "fields": {
+        "name": "変更管理関連"
+      }
+    },
+    {
+      "model": "dify_app.category",
+      "pk": 11,
+      "fields": {
+        "name": "キャパシティ管理関連"
+      }
+    },
+    {
+      "model": "dify_app.category",
+      "pk": 12,
+      "fields": {
+        "name": "災害復旧関連"
+      }
+    },
+    {
+      "model": "dify_app.category",
+      "pk": 13,
+      "fields": {
+        "name": "サードパーティサービス関連"
+      }
+    },
+    {
+      "model": "dify_app.category",
+      "pk": 14,
+      "fields": {
+        "name": "ハードウェア関連"
+      }
+    },
+    {
+      "model": "dify_app.category",
+      "pk": 15,
+      "fields": {
+        "name": "ソフトウェアライフサイクル関連"
+      }
+    },
+    {
+      "model": "dify_app.category",
+      "pk": 16,
+      "fields": {
+        "name": "その他"
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 1,
+      "fields": {
+        "name": "サーバーダウン",
+        "category": 1
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 2,
+      "fields": {
+        "name": "ネットワーク障害",
+        "category": 1
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 3,
+      "fields": {
+        "name": "ストレージ障害",
+        "category": 1
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 4,
+      "fields": {
+        "name": "仮想化基盤障害",
+        "category": 1
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 5,
+      "fields": {
+        "name": "クラウドサービス障害",
+        "category": 1
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 6,
+      "fields": {
+        "name": "データセンター設備障害（電源、空調等）",
+        "category": 1
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 7,
+      "fields": {
+        "name": "アプリケーションクラッシュ",
+        "category": 2
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 8,
+      "fields": {
+        "name": "パフォーマンス低下",
+        "category": 2
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 9,
+      "fields": {
+        "name": "機能障害",
+        "category": 2
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 10,
+      "fields": {
+        "name": "データ整合性エラー",
+        "category": 2
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 11,
+      "fields": {
+        "name": "バッチ処理失敗",
+        "category": 2
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 12,
+      "fields": {
+        "name": "API障害",
+        "category": 2
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 13,
+      "fields": {
+        "name": "データベースサーバーダウン",
+        "category": 3
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 14,
+      "fields": {
+        "name": "クエリパフォーマンス低下",
+        "category": 3
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 15,
+      "fields": {
+        "name": "データ破損",
+        "category": 3
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 16,
+      "fields": {
+        "name": "レプリケーション障害",
+        "category": 3
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 17,
+      "fields": {
+        "name": "バックアップ/リストア失敗",
+        "category": 3
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 18,
+      "fields": {
+        "name": "マルウェア検出",
+        "category": 4
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 19,
+      "fields": {
+        "name": "不正アクセス試行",
+        "category": 4
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 20,
+      "fields": {
+        "name": "DDoS攻撃",
+        "category": 4
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 21,
+      "fields": {
+        "name": "データ漏洩",
+        "category": 4
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 22,
+      "fields": {
+        "name": "ランサムウェア感染",
+        "category": 4
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 23,
+      "fields": {
+        "name": "フィッシング攻撃",
+        "category": 4
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 24,
+      "fields": {
+        "name": "ルーター/スイッチ障害",
+        "category": 5
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 25,
+      "fields": {
+        "name": "ファイアウォール問題",
+        "category": 5
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 26,
+      "fields": {
+        "name": "DNS障害",
+        "category": 5
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 27,
+      "fields": {
+        "name": "帯域幅飽和",
+        "category": 5
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 28,
+      "fields": {
+        "name": "VPN接続障害",
+        "category": 5
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 29,
+      "fields": {
+        "name": "無線LAN障害",
+        "category": 5
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 30,
+      "fields": {
+        "name": "ログイン問題",
+        "category": 6
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 31,
+      "fields": {
+        "name": "メールシステム障害",
+        "category": 6
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 32,
+      "fields": {
+        "name": "ファイル共有問題",
+        "category": 6
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 33,
+      "fields": {
+        "name": "プリンター/スキャナー障害",
+        "category": 6
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 34,
+      "fields": {
+        "name": "デバイス互換性問題",
+        "category": 6
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 35,
+      "fields": {
+        "name": "ソフトウェアライセンス違反",
+        "category": 6
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 36,
+      "fields": {
+        "name": "監視システム障害",
+        "category": 7
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 37,
+      "fields": {
+        "name": "誤検知アラート",
+        "category": 7
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 38,
+      "fields": {
+        "name": "クリティカルアラート未検知",
+        "category": 7
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 39,
+      "fields": {
+        "name": "ログ収集障害",
+        "category": 7
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 40,
+      "fields": {
+        "name": "パフォーマンスメトリクス異常",
+        "category": 7
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 41,
+      "fields": {
+        "name": "バックアップジョブ失敗",
+        "category": 8
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 42,
+      "fields": {
+        "name": "リストア処理エラー",
+        "category": 8
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 43,
+      "fields": {
+        "name": "バックアップメディア障害",
+        "category": 8
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 44,
+      "fields": {
+        "name": "増分バックアップ不整合",
+        "category": 8
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 45,
+      "fields": {
+        "name": "アーカイブシステム障害",
+        "category": 8
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 46,
+      "fields": {
+        "name": "データ保持ポリシー違反",
+        "category": 9
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 47,
+      "fields": {
+        "name": "アクセスログ欠落",
+        "category": 9
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 48,
+      "fields": {
+        "name": "監査要件未達",
+        "category": 9
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 49,
+      "fields": {
+        "name": "GDPR/CCPA等の規制違反",
+        "category": 9
+      }
+    },
+    {
+      "model": "dify_app.subcategory",
+      "pk": 50,
+      "fields": {
+        "name": "PCI DSS非準拠",
+        "category": 9
+      }
+    },
+    {
+        "model": "dify_app.subcategory",
+        "pk": 51,
+        "fields": {
+          "name": "パッチ適用失敗",
+          "category": 10
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 52,
+        "fields": {
+          "name": "設定変更エラー",
+          "category": 10
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 53,
+        "fields": {
+          "name": "ロールバック失敗",
+          "category": 10
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 54,
+        "fields": {
+          "name": "互換性問題",
+          "category": 10
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 55,
+        "fields": {
+          "name": "未承認変更検出",
+          "category": 10
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 56,
+        "fields": {
+          "name": "ディスク容量枯渇",
+          "category": 11
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 57,
+        "fields": {
+          "name": "メモリ不足",
+          "category": 11
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 58,
+        "fields": {
+          "name": "CPU使用率過多",
+          "category": 11
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 59,
+        "fields": {
+          "name": "ライセンス超過使用",
+          "category": 11
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 60,
+        "fields": {
+          "name": "スケーリング失敗",
+          "category": 11
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 61,
+        "fields": {
+          "name": "DR計画実行失敗",
+          "category": 12
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 62,
+        "fields": {
+          "name": "サイト間レプリケーション障害",
+          "category": 12
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 63,
+        "fields": {
+          "name": "フェイルオーバー失敗",
+          "category": 12
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 64,
+        "fields": {
+          "name": "BCP発動遅延",
+          "category": 12
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 65,
+        "fields": {
+          "name": "復旧ポイント目標（RPO）/復旧時間目標（RTO）未達",
+          "category": 12
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 66,
+        "fields": {
+          "name": "クラウドサービス停止",
+          "category": 13
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 67,
+        "fields": {
+          "name": "API連携障害",
+          "category": 13
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 68,
+        "fields": {
+          "name": "SaaS提供者障害",
+          "category": 13
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 69,
+        "fields": {
+          "name": "CDN障害",
+          "category": 13
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 70,
+        "fields": {
+          "name": "決済ゲートウェイ障害",
+          "category": 13
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 71,
+        "fields": {
+          "name": "物理サーバー障害",
+          "category": 14
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 72,
+        "fields": {
+          "name": "ストレージデバイス故障",
+          "category": 14
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 73,
+        "fields": {
+          "name": "ネットワーク機器故障",
+          "category": 14
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 74,
+        "fields": {
+          "name": "UPS障害",
+          "category": 14
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 75,
+        "fields": {
+          "name": "ハードウェア互換性問題",
+          "category": 14
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 76,
+        "fields": {
+          "name": "非推奨ソフトウェア使用",
+          "category": 15
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 77,
+        "fields": {
+          "name": "セキュリティパッチ未適用",
+          "category": 15
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 78,
+        "fields": {
+          "name": "バージョン非互換性",
+          "category": 15
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 79,
+        "fields": {
+          "name": "ライセンス期限切れ",
+          "category": 15
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 80,
+        "fields": {
+          "name": "サポート終了製品使用",
+          "category": 15
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 81,
+        "fields": {
+          "name": "人的ミス",
+          "category": 16
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 82,
+        "fields": {
+          "name": "プロセス違反",
+          "category": 16
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 83,
+        "fields": {
+          "name": "ドキュメンテーション不備",
+          "category": 16
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 84,
+        "fields": {
+          "name": "トレーニング不足",
+          "category": 16
+        }
+      },
+      {
+        "model": "dify_app.subcategory",
+        "pk": 85,
+        "fields": {
+          "name": "コミュニケーション障害",
+          "category": 16
+        }
+      }
+    ]

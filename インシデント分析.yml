@@ -1,0 +1,248 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: インシデント分析
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.2
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: knowledge-retrieval
+      id: 1727056849235-source-1727058873569-target
+      source: '1727056849235'
+      sourceHandle: source
+      target: '1727058873569'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: knowledge-retrieval
+        targetType: llm
+      id: 1727058873569-source-1727058920403-target
+      source: '1727058873569'
+      sourceHandle: source
+      target: '1727058920403'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: end
+      id: 1727058920403-source-1727059397600-target
+      source: '1727058920403'
+      sourceHandle: source
+      target: '1727059397600'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 開始
+        type: start
+        variables:
+        - label: カテゴリ
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: category
+        - label: サブカテゴリ
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: subcategory
+        - label: 詳細情報
+          max_length: 30000
+          options: []
+          required: true
+          type: paragraph
+          variable: details
+        - label: 質問内容
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: query
+      height: 167
+      id: '1727056849235'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        dataset_ids:
+        - f26786cb-4aac-4232-b869-77a18c0559f6
+        desc: ''
+        multiple_retrieval_config:
+          reranking_enable: true
+          reranking_mode: weighted_score
+          top_k: 4
+          weights:
+            keyword_setting:
+              keyword_weight: 0
+            vector_setting:
+              embedding_model_name: text-embedding-3-large
+              embedding_provider_name: openai
+              vector_weight: 1
+        query_variable_selector:
+        - '1727056849235'
+        - query
+        retrieval_mode: multiple
+        selected: false
+        title: 知識取得
+        type: knowledge-retrieval
+      height: 91
+      id: '1727058873569'
+      position:
+        x: 383
+        y: 282
+      positionAbsolute:
+        x: 383
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1727058873569'
+          - result
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-4o-mini
+          provider: openai
+        prompt_template:
+        - id: 63c93730-2e02-404d-a2d8-2413170724cb
+          role: system
+          text: 'あなたは経験豊富なITシステム運用エキスパートです。提供された情報を基に、過去の類似インシデントも参照しながら、ユーザの質問に#出力フォーマットで回答してください。
+
+            各セクションで具体的かつ実用的な情報を提供し、過去の経験を活かしつつ、現在の状況に最適化された対応策を提案してください。
+
+
+            インシデントタイプ（大項目）: {{#1727056849235.category#}}
+
+            インシデントタイプ（中項目）：{{#1727056849235.subcategory#}}
+
+            質問内容：{{#1727056849235.query#}}
+
+            詳細情報：{{#1727056849235.details#}}
+
+
+            #過去インシデント情報
+
+            {{{#context#}}
+
+
+            #出力フォーマット
+
+            ## 状況概要
+
+            ## 類似過去インシデント（概要と解決策）
+
+            ## 初期対応手順
+
+            ## 考えられる原因
+
+            ## 詳細な解決ステップ
+
+            ## 参照した過去事例のインシデント情報
+
+            　{ここに参照した過去事例のチケット情報をすべて転記する}
+
+
+            '
+        selected: true
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+          enabled: true
+      height: 97
+      id: '1727058920403'
+      position:
+        x: 686
+        y: 282
+      positionAbsolute:
+        x: 686
+        y: 282
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1727058920403'
+          - text
+          variable: text
+        selected: false
+        title: 終了
+        type: end
+      height: 89
+      id: '1727059397600'
+      position:
+        x: 989
+        y: 282
+      positionAbsolute:
+        x: 989
+        y: 282
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    viewport:
+      x: 117.77198722527783
+      y: -21.90358833264102
+      zoom: 0.707106790924537
