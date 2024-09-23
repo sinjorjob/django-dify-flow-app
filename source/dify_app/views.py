@@ -25,7 +25,6 @@ def get_subcategories(request):
 def run_dify_workflow(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        workflow_id = "ccbaca36-09da-4f58-a54a-36af58ad59bf"
         user_inputs = {
             "category": data['category'],
             "subcategory": data['subcategory'],
@@ -34,7 +33,7 @@ def run_dify_workflow(request):
         }
         user_id = "django_sysuser"
 
-        result = run_workflow(workflow_id, user_inputs, user_id)
+        result = run_workflow(user_inputs, user_id)
         if result:
             workflow_run_id, _ = result
             for _ in range(10):
@@ -62,10 +61,9 @@ def run_dify_workflow(request):
             return JsonResponse({'status': 'error', 'message': "ワークフローの開始に失敗しました。"})
     return JsonResponse({'status': 'error', 'message': "Invalid request method"})
 
-def run_workflow(workflow_id, inputs, user_id):
+def run_workflow(inputs, user_id):
     url = f"{BASE_URL}/workflows/run"
     payload = {
-        "workflow_id": workflow_id,
         "inputs": inputs,
         "response_mode": "blocking",
         "user": user_id
