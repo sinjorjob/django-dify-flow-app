@@ -43,23 +43,31 @@ DIFY上で**インシデント分析.yml**を使ってインシデント分析�
    cd pandasai-django-app\source
    ```
 
-4. データベースのセットアップ
+4. .envファイルの作成
+
+ プロジェクトディレクトリ直下に`.env`ファイルを作成し以下の通りDIFYのAPIキーを設定する。
+
+   ```
+   API_KEY=xxxxxxx
+   ```
+
+5. データベースのセットアップ
    ```
    python manage.py makemigrations dify_app
    python manage.py migrate
    ```
 
-5. 管理者ユーザーの作成
+6. 管理者ユーザーの作成
    ```
    python manage.py createsuperuser
    ```
 
-6. サーバーの起動
+7. サーバーの起動
    ```
    python manage.py runserver
    ```
 
-7. ブラウザで `http://127.0.0.1:8000/` にアクセスして動作確認
+8. ブラウザで `http://127.0.0.1:8000/` にアクセスして動作確認
 
 ## 初期データの登録（カテゴリ、サブカテゴリ）
 
